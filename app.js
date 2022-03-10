@@ -16,10 +16,16 @@ app.post('/insert',async (req,res)=>{
     const name = req.body.txtName
     const price = req.body.txtPrice
     const picURL = req.body.txtPictureURL
+    
     const newP = {
         'name' : name,
         'price': price,
         'pic' : picURL
+    }
+    if ((newP.price >100)||(newP.price <0)){
+        const errorPrice = "Price below 0 or over 100"
+        res.render('index',{"priceError": errorPrice})
+        return
     }
     const collectionName = 'SanPham'
     await insertObject(collectionName,newP)
